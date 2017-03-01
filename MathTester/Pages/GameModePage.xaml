@@ -1,0 +1,28 @@
+﻿<Page
+    x:Class="MathTester.Pages.GameModePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MathTester.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <RelativePanel>
+        <StackPanel Orientation="Vertical">
+            <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Vertical">
+                    <Button x:Name="btnModeStandard" Content="Standard" Click="btnMode_Click" />
+                    <Button x:Name="btnModeMarathon" Content="Marathon" Click="btnMode_Click" />
+                </StackPanel>
+                <ListView x:Name="lvHighScore">
+                </ListView>
+            </StackPanel>
+            <StackPanel x:Name="spDifficulty" Orientation="Horizontal">
+                <Button x:Name="btnDifEasy" Content="Easy" Click="btnDif_Click"/>
+                <Button x:Name="btnDifMedium" Content="Medium" Click="btnDif_Click"/>
+                <Button x:Name="btnDifHard" Content="Hard" Click="btnDif_Click"/>
+            </StackPanel>
+            <Button x:Name="btnPlay" Content="Play!" Width="auto" Click="btnPlay_Click"/>
+        </StackPanel>
+    </RelativePanel>
+</Page>

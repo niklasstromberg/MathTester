@@ -43,13 +43,14 @@ namespace MathTester.Pages
             tbDifficulty.Text = _gameModel.Difficulty.ToString();
             tbMode.Text = _gameModel.GameMode.ToString();
             tbQuestion.Text = _engine.QuestionString;
+            tbxAnswer.Text = "";
         }
 
         private void btnEvaluateAnswer_Click(object sender, RoutedEventArgs e)
         {
             bool success = _gameMode.Evaluate(_engine.ValueToCompare, GetValue(tbxAnswer.Text));
             Update(success);
-            _engine.StartGame();
+            _engine.RestartCycle();
             UpdateGUI();        
         }
 

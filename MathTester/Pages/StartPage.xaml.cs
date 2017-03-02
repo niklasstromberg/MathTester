@@ -23,17 +23,16 @@ namespace MathTester.Pages
     /// </summary>
     public sealed partial class StartPage : Page
     {
-        private GameModel _gameModel;
+        //private GameModel _gameModel;
 
         public StartPage(GameModel gameModel)
         {
             this.InitializeComponent();
-            _gameModel = gameModel;
         }
 
         private void BtnStart_Click(object sender, RoutedEventArgs e)
         {
-            Navigator.Navigate(sender, e, this);
+            Navigator.Instance.Navigate("GameModePage");
         }
     }
 }

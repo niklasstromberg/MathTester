@@ -1,31 +1,57 @@
-﻿using MathTester.Models;
-using MathTester.Pages;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.UI.Xaml;
+﻿using MathTester.Pages;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
 
 namespace MathTester
 {
-    internal static class Navigator
+    public class Navigator
     {
-        public static void Navigate(object sender, RoutedEventArgs e, Page page)
+        private static Navigator _instance = null;
+        private MainPage _mainPage;
+        private Frame _frame;
+
+        public Navigator()
+        { }
+
+        public static Navigator Instance
         {
-            GameModel gameModel = GameModel.Instance;
-            var frame = page.Parent as Frame;
-            var button = sender as Button;
-            if (button.Name == "btnStart")
+            get
             {
-                frame.Navigate(typeof(GameModePage), gameModel);
+                return _instance ?? (_instance = new Navigator());
             }
-            if(button.Name == "btnPlay")
+        }
+
+        public MainPage MainPage
+        {
+            get
             {
-                frame.Navigate(typeof(MainGamePage), gameModel);
+                return _mainPage;
             }
+            set
+            {
+                _mainPage = value;
+            }
+        }
+
+        public Frame Frame
+        {
+            get
+            {
+                return _frame;
+            }
+            set
+            {
+                _frame = value;
+            }
+        }
+
+        public void Navigate(string page)
+        {
+            if (page == "GameModePage")
+                MainPage.SetFrameContent(new GameModePage());
+            if (page == "MainGamePage")
+                MainPage.SetFrameContent(new MainGamePage());
+            if (page == "GameOverPage")
+                MainPage.SetFrameContent(new GameOverPage());
         }
     }
 }

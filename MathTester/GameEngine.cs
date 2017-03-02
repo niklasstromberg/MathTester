@@ -1,9 +1,7 @@
 ﻿using MathTester.Models;
 using System;
 using System.Collections.Generic;
-using System.Threading;
-using Windows.ApplicationModel.Core;
-using Windows.UI.Core;
+using Windows.UI.Xaml;
 
 namespace MathTester
 {
@@ -17,7 +15,7 @@ namespace MathTester
         private string _operation;
         Random random = new Random();
         private int _counter;
-        private Timer _timer;
+        public DispatcherTimer _dispatcherTimer;
 
         public GameEngine()
         {
@@ -82,38 +80,67 @@ namespace MathTester
             return a + _operation + b;
         }
 
+        public void SpinUpCycle()
+        {
+            if (_dispatcherTimer == null)
+                _dispatcherTimer = new DispatcherTimer();
+            _dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 1);
+            _dispatcherTimer.Tick += Dt_Tick;
+        }
+
         public void StartGame()
+        {
+            SpinUpCycle();
+            Cycle();
+        }
+
+        public void RestartCycle()
         {
             Cycle();
         }
 
+        public void StopCycle()
+        {
+            _dispatcherTimer.Stop();
+        }
+
         private void Cycle()
         {
+            GameModel.Instance.Counter = GetCounter();
             a = GenerateNumber();
             b = GenerateNumber();
             _operation = GetOperation();
             QuestionString = GenerateString();
             ValueToCompare = GetValueToCompare();
-            _timer = new Timer(x => OnCallBack(), null, 0, 0);
+            _dispatcherTimer.Start();
         }
 
-        private void OnCallBack()
+        private void Dt_Tick(object sender, object e)
         {
-            _timer.Change(1000, Timeout.Infinite);
-            Counter--;
-            CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
-    () =>
-    {
-        GameModel.Instance.SetCounter(_counter);
-    });
-            //GameModel.Instance.SetCounter(_counter);
+            GameModel.Instance.Counter--;
             if (CheckTime())
-                _timer.Dispose();
+            {
+                // fortsätt ticka ner mot noll
+            }
+            else
+            {
+                int change = GameModel.Instance.GameModeModel.Update(false);
+                if (GameModel.Instance.GameMode == Enums.GameMode.Marathon)
+                    GameModel.Instance.Score -= change;
+                if (GameModel.Instance.GameMode == Enums.GameMode.Standard)
+                    GameModel.Instance.Lives--;
+                if (GameModel.Instance.GameModeModel.GameOver())
+                {
+                    StopCycle();
+                    Navigator.Instance.Navigate("GameOverPage");
+                }
+                Cycle();
+            }
         }
 
         private bool CheckTime()
         {
-            return Counter > 0;
+            return GameModel.Instance.Counter > 0;
         }
     }
 }

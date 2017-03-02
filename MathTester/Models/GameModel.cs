@@ -1,8 +1,7 @@
 ﻿using MathTester.Enums;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Threading;
-using System;
+using Windows.UI.Xaml.Controls;
 
 namespace MathTester.Models
 {
@@ -17,6 +16,7 @@ namespace MathTester.Models
         private GameMode _mode;
         private IGameModel _gameModeModel = null;
         private Difficulty _difficulty;
+        private Frame _frame;
         public Dictionary<string, int> _highscoreStandardEasy = new Dictionary<string, int>();
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -36,6 +36,18 @@ namespace MathTester.Models
             get
             {
                 return _instance ?? (_instance = new GameModel());
+            }
+        }
+
+        public Frame Frame
+        {
+            get
+            {
+                return _frame;
+            }
+            set
+            {
+                _frame = value;
             }
         }
 

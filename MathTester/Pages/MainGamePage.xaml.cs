@@ -1,7 +1,9 @@
 ﻿using MathTester.Models;
 using System;
+using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 
 namespace MathTester.Pages
 {
@@ -51,7 +53,8 @@ namespace MathTester.Pages
             bool success = _gameMode.Evaluate(_engine.ValueToCompare, GetValue(tbxAnswer.Text));
             Update(success);
             _engine.RestartCycle();
-            UpdateGUI();        
+            UpdateGUI();
+            tbxAnswer.Focus(FocusState.Programmatic);
         }
 
         private void Update(bool update)
@@ -72,6 +75,12 @@ namespace MathTester.Pages
             int result;
             Int32.TryParse(str, out result);
             return result;
+        }
+
+        private void tbxAnswer_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == VirtualKey.Enter)
+                btnEvaluateAnswer_Click(sender, e);
         }
     }
 }

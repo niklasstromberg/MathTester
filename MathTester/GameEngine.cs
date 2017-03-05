@@ -102,6 +102,7 @@ namespace MathTester
         public void StopCycle()
         {
             _dispatcherTimer.Stop();
+            _dispatcherTimer = null;
         }
 
         private void Cycle()
@@ -118,29 +119,33 @@ namespace MathTester
         private void Dt_Tick(object sender, object e)
         {
             GameModel.Instance.Counter--;
-            if (CheckTime())
+            if (TimeIsUp())
             {
-                // fortsätt ticka ner mot noll
+                EndOfCycle();
+            }
+        }
+
+        private void EndOfCycle()
+        {
+            int change = GameModel.Instance.GameModeModel.Update(false);
+            if (GameModel.Instance.GameMode == Enums.GameMode.Marathon)
+                GameModel.Instance.Score -= change;
+            if (GameModel.Instance.GameMode == Enums.GameMode.Standard)
+                GameModel.Instance.Lives--;
+            if (GameModel.Instance.GameModeModel.GameOver())
+            {
+                StopCycle();
+                Navigator.Instance.Navigate("GameOverPage");
             }
             else
             {
-                int change = GameModel.Instance.GameModeModel.Update(false);
-                if (GameModel.Instance.GameMode == Enums.GameMode.Marathon)
-                    GameModel.Instance.Score -= change;
-                if (GameModel.Instance.GameMode == Enums.GameMode.Standard)
-                    GameModel.Instance.Lives--;
-                if (GameModel.Instance.GameModeModel.GameOver())
-                {
-                    StopCycle();
-                    Navigator.Instance.Navigate("GameOverPage");
-                }
                 Cycle();
             }
         }
 
-        private bool CheckTime()
+        private bool TimeIsUp()
         {
-            return GameModel.Instance.Counter > 0;
+            return GameModel.Instance.Counter < 1;
         }
     }
 }

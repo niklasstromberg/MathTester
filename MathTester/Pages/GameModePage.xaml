@@ -8,13 +8,21 @@
     mc:Ignorable="d">
 
     <RelativePanel>
-        <StackPanel Orientation="Vertical">
+        <StackPanel x:Name="spMainPanel" Orientation="Vertical">
             <StackPanel Orientation="Horizontal">
                 <StackPanel Orientation="Vertical">
                     <Button x:Name="btnModeStandard" Content="Standard" Click="btnMode_Click" />
                     <Button x:Name="btnModeMarathon" Content="Marathon" Click="btnMode_Click" />
                 </StackPanel>
                 <ListView x:Name="lvHighScore">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock x:Name="lvtbName" Text="{Binding Name}" Margin="0,0,10,0"/>
+                                <TextBlock x:Name="lvtbScore" Text="{Binding Score}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
                 </ListView>
             </StackPanel>
             <StackPanel x:Name="spDifficulty" Orientation="Horizontal">

@@ -20,8 +20,8 @@
         </StackPanel>
         <StackPanel Orientation="Horizontal" Margin="5" RelativePanel.AlignHorizontalCenterWithPanel="True">
             <TextBlock x:Name="tbQuestion" />
-            <TextBox x:Name="tbxAnswer" />
-            <Button x:Name="btnEvaluateAnswer" Content="Answer!" Click="btnEvaluateAnswer_Click"/>
+            <TextBox x:Name="tbxAnswer" KeyDown="tbxAnswer_KeyDown"/>
+            <Button x:Name="btnEvaluateAnswer" Content="Answer!" Click="btnEvaluateAnswer_Click" />
         </StackPanel>
     </RelativePanel>
 </Page>

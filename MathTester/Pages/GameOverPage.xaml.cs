@@ -14,7 +14,21 @@ namespace MathTester.Pages
 
         private void btnRestart_Click(object sender, RoutedEventArgs e)
         {
+            CreateRecord();
             Navigator.Instance.Navigate("GameModePage");
+        }
+
+        private void CreateRecord()
+        {
+            var record = new RecordModel
+            {
+                Name = tbxName.Text,
+                Difficulty = GameModel.Instance.Difficulty,
+                GameMode = GameModel.Instance.GameMode,
+                Score = GameModel.Instance.Score
+            };
+            if (GameModel.Instance.RecordHandler.IsHighscore(record))
+                GameModel.Instance.RecordHandler.InsertHighscore(record);
         }
     }
 }

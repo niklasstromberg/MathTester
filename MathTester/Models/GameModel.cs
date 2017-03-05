@@ -17,12 +17,13 @@ namespace MathTester.Models
         private IGameModel _gameModeModel = null;
         private Difficulty _difficulty;
         private Frame _frame;
-        public Dictionary<string, int> _highscoreStandardEasy = new Dictionary<string, int>();
+        private RecordHandler _recordHandler;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         public GameModel()
         {
+            _recordHandler = new RecordHandler();
         }
 
         private void OnPropertyChanged(string name)
@@ -36,6 +37,22 @@ namespace MathTester.Models
             get
             {
                 return _instance ?? (_instance = new GameModel());
+            }
+        }
+
+        public void ResetModel()
+        {
+            SetGameMode("");
+            SetDifficulty("");
+            Lives = 3;
+            Score = 0;
+        }
+
+        public RecordHandler RecordHandler
+        {
+            get
+            {
+                return _recordHandler;
             }
         }
 
@@ -195,7 +212,5 @@ namespace MathTester.Models
                     }
             }
         }
-
-
     }
 }

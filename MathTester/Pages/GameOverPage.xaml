@@ -8,7 +8,13 @@
     mc:Ignorable="d">
 
     <RelativePanel>
-        <TextBlock x:Name="tbStatus" />
-        <Button x:Name="btnRestart" Content="Try again" Click="btnRestart_Click"/>
+        <StackPanel Orientation="Vertical">
+            <TextBlock x:Name="tbStatus" />
+            <StackPanel Orientation="Horizontal">
+                <TextBlock x:Name="tbNameLabel" Text="Your name" />
+                <TextBox x:Name="tbxName"/>
+            </StackPanel>
+            <Button x:Name="btnRestart" Content="Try again" Click="btnRestart_Click"/>
+        </StackPanel>
     </RelativePanel>
 </Page>
